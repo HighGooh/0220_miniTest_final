@@ -1,0 +1,23 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from src.routes import auth, user, board
+
+# 라우터 등록
+routers = [auth, user, board]
+app = FastAPI(title="Producer")
+for router in routers:
+    app.include_router(router.router)
+
+# CORS 설정
+origins = [ "http://localhost","http://localhost:5173", "http://quadecologics.cloud:8200" ]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+def read_root():
+  return {"2team": "zzangzzangman"}
