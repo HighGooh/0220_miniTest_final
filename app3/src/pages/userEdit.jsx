@@ -45,10 +45,10 @@ const UserEdit = () => {
 				if (res.data.status) {
 					alert(res.data.msg)
 					setChangeProfile(res.data.fileNo)
+					nav("/userview")	
 				}
 			})
 			.catch(err => console.error(err))
-		nav("/userview")	
 	}
 
 	useEffect(() => {
