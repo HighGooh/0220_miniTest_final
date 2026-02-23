@@ -5,8 +5,8 @@ import { useAuth } from "@hooks/AuthProvider"
 
 const UserView = () => {
 	const nav = useNavigate()
-	
-	const { profilePath } = useAuth()
+
+	const { profilePath, setIsLogin } = useAuth()
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [regDate, setRegDate] = useState('')
@@ -16,15 +16,15 @@ const UserView = () => {
 
 	// 초기값 불러오기
 	useEffect(() => {
-			api.post("/me")
-				.then(res => {
-					setName(res.data.user.name)
-					setEmail(res.data.user.email)
-					setRegDate(res.data.user.regDate)
-					setModDate(res.data.user.modDate)
-					setGender(res.data.user.gender)
-					setProfile(res.data.user.profileNo)
-				})
+		api.post("/me")
+			.then(res => {
+				setName(res.data.user.name)
+				setEmail(res.data.user.email)
+				setRegDate(res.data.user.regDate)
+				setModDate(res.data.user.modDate)
+				setGender(res.data.user.gender)
+				setProfile(res.data.user.profileNo)
+			})
 	}, [])
 
 
@@ -34,10 +34,12 @@ const UserView = () => {
 			.then(res => {
 				if (res.data.status) {
 					alert(res.data.msg)
-					nav("/")
+					setIsLogin(false)
+					nav('/')
 				} else {
 					alert(res.data.msg)
 				}
+
 			})
 	}
 
